@@ -10,13 +10,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
-import com.example.android.jokeandroid.JokeAndroidActivity;
-import com.example.android.jokejava.JokeJava;
-
-
 public class MainActivity extends AppCompatActivity {
-
-    private int mJokeIndex = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,27 +39,6 @@ public class MainActivity extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
-    }
-
-    public int iterateThroughJokes(int jokeIndex){
-
-        mJokeIndex = jokeIndex;
-
-        if (mJokeIndex < 9){
-            mJokeIndex++;
-        } else {
-            mJokeIndex = 0;
-        }
-
-        return mJokeIndex;
-    }
-
-    public void tellJoke(View view) {
-
-        iterateThroughJokes(mJokeIndex);
-
-        new EndpointsAsyncTask().execute(new Pair<Context, Integer>(this, mJokeIndex));
-
     }
 
 }
