@@ -31,6 +31,20 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+
+    flavorDimensions "tier"
+
+
+    productFlavors {
+        free {
+            dimension "tier"
+            applicationId "com.udacity.gradle.builditbigger.free"
+        }
+        paid {
+            dimension "tier"
+            applicationId "com.udacity.gradle.builditbigger.paid"
+        }
+    }
 }
 
 dependencies {
@@ -46,7 +60,12 @@ dependencies {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
 
+    androidTestCompile 'com.android.support:support-annotations:24.0.0'
+    androidTestCompile 'com.android.support.test:runner:0.5'
+
     testImplementation 'junit:junit:4.12'
 
     implementation project (':jokeandroid')
 }
+
+

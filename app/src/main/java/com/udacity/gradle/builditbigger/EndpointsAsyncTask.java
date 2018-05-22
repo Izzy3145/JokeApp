@@ -20,6 +20,9 @@ public class EndpointsAsyncTask extends AsyncTask<Pair<Context, Integer>, Void, 
     private static MyApi myApiService = null;
     private static String JOKE_FROM_JAVA = "joke from java";
 
+    private getJokeListener mListener = null;
+    private Exception mError = null;
+
     private Context context;
 
         @Override
@@ -52,10 +55,32 @@ public class EndpointsAsyncTask extends AsyncTask<Pair<Context, Integer>, Void, 
             }
         }
 
+        public EndpointsAsyncTask setListener(getJokeListener listener){
+            this.mListener = listener;
+            return this;
+        }
+
         @Override
         protected void onPostExecute(String result) {
+            if(mListener != null){
+                this.mListener.onComplete(result, mError);
+            }
+
             Intent intent = new Intent(context, JokeAndroidActivity.class);
             intent.putExtra(JOKE_FROM_JAVA, result);
             context.startActivity(intent);
+
+        }
+
+    @Override
+    protected void onCancelled() {
+        if(mListener != null){
+            mError = new InterruptedException("Async task cancelled");
+            this.mListener.onComplete(null, mError);
+        }
+    }
+
+    public static interface getJokeListener{
+            public void onComplete(String jokeString, Exception e);
         }
     }
