@@ -21,9 +21,11 @@ public class JokeAndroidActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_android);
 
+        String receivedJoke = "";
         Intent receivedIntent = getIntent();
-        String receivedJoke = receivedIntent.getStringExtra(JOKE_FROM_JAVA);
-
+        if (receivedIntent.hasExtra(JOKE_FROM_JAVA)) {
+            receivedJoke = receivedIntent.getStringExtra(JOKE_FROM_JAVA);
+        }
         mJokeTv = (TextView) findViewById(R.id.joke_tv);
         mJokeTv.setText(receivedJoke);
 
